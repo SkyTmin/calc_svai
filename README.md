@@ -65,7 +65,7 @@ npm test
 git add dist tests README.md package.json
 git commit -m "Update calculator"
 git push origin main
-git subtree push --prefix dist origin gh-pages
+npm run deploy
 ```
 
 Для публикации не нужны ключи в коде. Репозиторий: https://github.com/SkyTmin/calc_svai

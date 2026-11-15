@@ -4,5 +4,5 @@
   "private": true,
   "type": "module",
   "description": "Калькулятор длины сваи с учётом наклона",
-  "scripts": { "test": "node --test tests/*.test.js" }
+  "scripts": { "test": "node --test tests/*.test.js", "deploy": "node scripts/publish-pages.mjs" }
 }
