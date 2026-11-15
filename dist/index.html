@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f5f1">
+  <meta name="description" content="Длина сваи по вертикали с учётом наклона. Расчёт в градусах, минутах, секундах или миллиметрах на метр. Наглядная схема и копирование результата.">
+  <title>Свая — калькулятор наклона</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header class="topbar wrap">
+    <a class="brand" href="./" aria-label="Свая — главная"><span class="brand-mark" aria-hidden="true">╱</span>свая<span class="brand-dot">.</span></a>
+    <span class="top-caption">Полевой калькулятор <span class="status-dot"></span></span>
+  </header>
+  <main class="wrap">
+    <section class="intro">
+      <div><p class="eyebrow">ГЕОМЕТРИЯ БЕЗ ЛИШНИХ ДЕЙСТВИЙ</p><h1>Свая под углом.<br><span>Длина по вертикали.</span></h1><p class="intro-copy">Введите длину и наклон — получите проекцию<br class="desktop-break"> сваи по вертикали и смещение её конца.</p></div>
+      <div class="intro-stamp" aria-hidden="true"><svg viewBox="0 0 80 80"><path d="M20 12V65H65" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4"/><path d="M20 12L49 65" fill="none" stroke="currentColor" stroke-width="6"/><path d="M20 34Q27 34 31 32" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="28" y="29" font-size="12" fill="currentColor">α</text></svg><span>L × cos α</span></div>
+    </section>
+
+    <div class="calculator-grid">
+      <section class="input-card card" aria-labelledby="input-heading">
+        <div class="card-heading"><span class="step">01</span><h2 id="input-heading">Исходные данные</h2><button type="button" class="text-button" id="reset" title="Вернуть пример">Сбросить</button></div>
+        <form id="calculator" novalidate>
+          <label class="field-label" for="mode">Что считаем</label>
+          <div class="select-wrap"><select id="mode" name="mode"><option value="vertical">Длину по вертикали</option><option value="pile">Длину вдоль сваи</option></select></div>
+          <div class="length-heading"><label class="field-label" for="length" id="length-label">Длина вдоль сваи</label><span class="field-hint" id="length-hint">фактическая</span></div>
+          <div class="number-field length-field"><input id="length" name="length" inputmode="decimal" type="text" value="50,560" autocomplete="off" spellcheck="false" aria-describedby="length-help"><span>м</span></div>
+          <p class="helper" id="length-help">Можно вводить через запятую или точку.</p>
+
+          <div class="incline-heading"><span class="field-label" id="incline-label">Наклон от вертикали</span><span class="angle-symbol" aria-hidden="true">∠</span></div>
+          <div class="segmented" role="group" aria-labelledby="incline-label">
+            <button type="button" id="dms-tab" aria-pressed="true" aria-controls="dms-panel" data-angle="dms">Градусы · минуты · секунды</button>
+            <button type="button" id="slope-tab" aria-pressed="false" aria-controls="slope-panel" data-angle="slope">мм / м</button>
+          </div>
+          <div id="dms-panel">
+            <div class="angle-fields">
+              <div><label for="degrees">Градусы</label><div class="number-field"><input id="degrees" name="degrees" type="text" inputmode="decimal" value="12" autocomplete="off" spellcheck="false"><span>°</span></div></div>
+              <div><label for="minutes">Минуты</label><div class="number-field"><input id="minutes" name="minutes" type="text" inputmode="decimal" value="0" autocomplete="off" spellcheck="false"><span>′</span></div></div>
+              <div><label for="seconds">Секунды</label><div class="number-field"><input id="seconds" name="seconds" type="text" inputmode="decimal" value="6" autocomplete="off" spellcheck="false"><span>″</span></div></div>
+            </div>
+            <p class="helper">12 градусов 6 секунд = <strong>12° 00′ 06″</strong></p>
+          </div>
+          <div id="slope-panel" hidden>
+            <label class="sr-only" for="slope">Смещение в миллиметрах на метр</label>
+            <div class="number-field slope-field"><input id="slope" name="slope" type="text" inputmode="decimal" value="140" autocomplete="off" spellcheck="false"><span>мм / м</span></div>
+            <label class="small-label" for="basis">На какой метр измерено смещение?</label>
+            <div class="select-wrap"><select id="basis" name="basis"><option value="vertical">На 1 м по вертикали</option><option value="pile">На 1 м вдоль сваи</option></select></div>
+            <p class="helper" id="slope-help">140 мм в сторону на 1 м по вертикали.</p>
+          </div>
+          <div class="form-bottom"><span class="auto-indicator"></span>Результат обновляется при вводе</div>
+        </form>
+      </section>
+
+      <section class="output-column" aria-label="Результат расчёта">
+        <div class="result-card">
+          <div class="result-top"><span id="result-label">Длина по вертикали</span><span class="result-badge">РЕЗУЛЬТАТ</span></div>
+          <div id="result-live" aria-live="polite" aria-atomic="true"><p class="result-number"><span id="result">49,455</span><span class="result-unit">м</span></p><p id="result-caption" class="result-caption">Вертикальная проекция участка сваи</p></div>
+          <p id="error" class="error" role="alert" hidden></p>
+          <div class="result-metrics"><div><span id="difference-label">Короче на</span><strong id="difference">1,105 м</strong></div><div><span>Смещение в сторону</span><strong id="offset">10,513 м</strong></div></div>
+          <button class="copy-button" id="copy" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span id="copy-label">Скопировать расчёт</span></button>
+          <div id="copy-fallback" hidden><label for="copy-text">Скопируйте текст вручную:</label><textarea id="copy-text" rows="6" readonly></textarea></div>
+          <span id="copy-status" class="sr-only" role="status"></span>
+        </div>
+
+        <div class="diagram-card card">
+          <div class="diagram-heading"><h2>Как это выглядит</h2><span>Схема условная</span></div>
+          <svg id="diagram" viewBox="0 0 440 265" role="img" aria-labelledby="diagram-title diagram-description">
+            <title id="diagram-title">Длина сваи и её вертикальная проекция</title>
+            <desc id="diagram-description">Наклонная свая, вертикальная длина и горизонтальное смещение.</desc>
+            <defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#dce2e6"/></pattern><pattern id="soil" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M0 10L10 0" stroke="#d7dedb" stroke-width="1"/></pattern></defs>
+            <rect x="0" y="0" width="440" height="265" rx="10" fill="url(#grid)"/>
+            <rect x="26" y="33" width="388" height="12" fill="url(#soil)"/>
+            <path d="M26 33H414" stroke="#aebcb4" stroke-width="1.3"/>
+            <text x="272" y="22" fill="#6d7978" font-size="10" font-family="system-ui,sans-serif" letter-spacing="1">УРОВЕНЬ ВЕРХА</text>
+            <path id="triangle-fill" d="M160 36V219H258Z" fill="#eaf0ff" opacity=".8"/>
+            <path id="vertical-line" d="M160 36V219" stroke="#315fd6" stroke-width="2" stroke-dasharray="5 5"/>
+            <path id="offset-line" d="M160 219H258" stroke="#d98246" stroke-width="2" stroke-dasharray="4 4"/>
+            <path id="right-angle" d="M160 207H172V219" fill="none" stroke="#8c9cb4"/>
+            <path id="pile-shadow" d="M160 36L258 219" stroke="#d5dfda" stroke-width="15" stroke-linecap="round"/>
+            <path id="pile-line" d="M160 36L258 219" stroke="#263b3b" stroke-width="9" stroke-linecap="round"/>
+            <path id="angle-arc" d="M160 82A46 46 0 0 0 182 76" fill="none" stroke="#d98246" stroke-width="1.6"/>
+            <text id="diagram-angle" x="174" y="105" fill="#b66b2d" font-size="12" font-weight="600" font-family="system-ui,sans-serif">12,0017°</text>
+            <circle cx="160" cy="36" r="4" fill="#fff" stroke="#263b3b" stroke-width="2"/>
+            <circle id="pile-end" cx="258" cy="219" r="4" fill="#fff" stroke="#263b3b" stroke-width="2"/>
+            <rect x="22" y="113" width="116" height="46" rx="8" fill="#fff"/>
+            <text x="80" y="131" text-anchor="middle" fill="#728086" font-size="10" font-family="system-ui,sans-serif">ПО ВЕРТИКАЛИ</text>
+            <text id="diagram-height" x="80" y="148" text-anchor="middle" fill="#315fd6" font-size="15" font-weight="650" font-family="system-ui,sans-serif">49,455 м</text>
+            <text id="diagram-pile-label" x="258" y="116" fill="#728086" font-size="10" font-family="system-ui,sans-serif">ВДОЛЬ СВАИ</text>
+            <text id="diagram-length" x="258" y="135" fill="#263b3b" font-size="15" font-weight="650" font-family="system-ui,sans-serif">50,560 м</text>
+            <text id="diagram-offset" x="209" y="248" text-anchor="middle" fill="#b66b2d" font-size="12" font-weight="600" font-family="system-ui,sans-serif">10,513 м</text>
+          </svg>
+          <div class="diagram-legend"><span><i class="legend-pile"></i>Свая</span><span><i class="legend-height"></i>Вертикаль</span><span><i class="legend-offset"></i>Смещение</span></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="explanation" aria-label="Формула расчёта"><div class="formula-icon" aria-hidden="true">ƒ</div><div><h2 id="formula">H = L × cos α</h2><p id="formula-description">L — длина вдоль сваи, α — угол от вертикали, H — длина по вертикали.</p></div><span class="precision">Округление<br><strong>до 0,001 м</strong></span></section>
+    <details class="help"><summary>Как читать наклон и результат?<span aria-hidden="true">+</span></summary><div class="help-content"><p><strong>Пример:</strong> свая длиной 10 м при наклоне 12° от вертикали имеет вертикальную проекцию 9,781 м. Нижний конец смещён в сторону на 2,079 м.</p><p><strong>Минуты и секунды — разные величины.</strong> 12° 00′ 06″ — это 12 градусов и 6 секунд. 12° 06′ 00″ — это 12 градусов и 6 минут. Вводите их в соответствующие поля.</p><p><strong>Наклон в мм/м:</strong> укажите, на какой метр измерено смещение. Для метра по вертикали: H = L / √(1 + (q / 1000)²). Для метра вдоль сваи: H = L × √(1 − (q / 1000)²).</p><p>Вертикальная проекция равна глубине только для участка от уровня отсчёта до нижнего конца. Расчёт описывает геометрию и не определяет допустимость наклона.</p></div></details>
+  </main>
+  <footer class="wrap"><span>свая. <span class="footer-muted">Меньше пересчётов. Больше ясности.</span></span><a href="https://github.com/SkyTmin/calc_svai" target="_blank" rel="noopener noreferrer">Исходный код ↗</a></footer>
+</body>
+</html>
