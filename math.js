@@ -78,6 +78,7 @@ export function calculate(input) {
     length,
     pileLength,
     verticalLength,
+    coefficient: cosine,
     offset,
     difference,
     angleDegrees,
