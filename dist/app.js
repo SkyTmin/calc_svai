@@ -1,4 +1,4 @@
-import { calculate } from './math.js';
+import { calculate } from './math.js?v=2';
 
 const $ = (id) => document.getElementById(id);
 const form = $('calculator');
@@ -85,6 +85,7 @@ function update() {
     $('result').style.fontSize = resultText.length > 10 ? '0.65em' : '';
     $('difference').textContent = metres(current.difference);
     $('offset').textContent = metres(current.offset);
+    $('coefficient').textContent = decimal(current.coefficient);
     $('copy').disabled = false;
     updateDiagram(current);
   } catch (error) {
@@ -93,6 +94,7 @@ function update() {
     $('result').textContent = '—';
     $('difference').textContent = '—';
     $('offset').textContent = '—';
+    $('coefficient').textContent = '—';
     $('error').textContent = error.message;
     $('error').hidden = false;
     $('copy').disabled = true;
@@ -113,7 +115,8 @@ function copyText() {
     `Длина по вертикали: ${metres(current.verticalLength)}`,
     `Горизонтальное смещение: ${metres(current.offset)}`,
     `Разница длин: ${metres(current.difference)}`,
-    'Округление до 0,001 м.',
+    'Длины округлены до 0,001 м.',
+    `Коэффициент сваи: ${decimal(current.coefficient)}`,
   ].join('\n');
 }
 

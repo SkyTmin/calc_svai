@@ -7,8 +7,8 @@
   <meta name="description" content="Длина сваи по вертикали с учётом наклона. Расчёт в градусах, минутах, секундах или миллиметрах на метр. Наглядная схема и копирование результата.">
   <title>Свая — калькулятор наклона</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
-  <script type="module" src="./app.js"></script>
+  <link rel="stylesheet" href="./style.css?v=2">
+  <script type="module" src="./app.js?v=2"></script>
 </head>
 <body>
   <header class="topbar wrap">
@@ -62,6 +62,7 @@
           <div id="result-live" aria-live="polite" aria-atomic="true"><p class="result-number"><span id="result">—</span><span class="result-unit">м</span></p><p id="result-caption" class="result-caption">Вертикальная проекция участка сваи</p></div>
           <p id="error" class="error" role="alert" hidden></p>
           <div class="result-metrics"><div><span id="difference-label">Короче на</span><strong id="difference">—</strong></div><div><span>Смещение в сторону</span><strong id="offset">—</strong></div></div>
+          <div class="result-coefficient" aria-live="polite" aria-atomic="true"><div><span>Коэффициент сваи</span><p>Длина по вертикали / длина вдоль сваи</p></div><strong id="coefficient">—</strong></div>
           <button class="copy-button" id="copy" type="button" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span id="copy-label">Скопировать расчёт</span></button>
           <div id="copy-fallback" hidden><label for="copy-text">Скопируйте текст вручную:</label><textarea id="copy-text" rows="6" readonly></textarea></div>
           <span id="copy-status" class="sr-only" role="status"></span>
